@@ -1,0 +1,188 @@
+﻿@model List<ProductViewModel>
+@{
+    ViewData["Title"] = "محصولات دسته‌بندی";
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f5f6fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .navbar-brand {
+            color: #4f46e5 !important;
+            font-weight: 700;
+            font-size: 22px;
+        }
+
+        .nav-link {
+            color: #444 !important;
+            font-weight: 500;
+        }
+
+            .nav-link:hover {
+                color: #4f46e5 !important;
+            }
+
+        .login-btn {
+            background: #4f46e5;
+            color: #fff !important;
+            padding: 6px 16px;
+            border-radius: 6px;
+        }
+
+        .product-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: 0.3s;
+            background-color: #fff;
+        }
+
+            .product-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            }
+
+            .product-card img {
+                border-radius: 15px 15px 0 0;
+                height: 200px;
+                object-fit: cover;
+            }
+
+        .product-card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: #4f46e5;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .content-wrapper {
+            flex: 1;
+        }
+
+        footer {
+            background: #1f2937;
+            color: #d1d5db;
+            padding: 15px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">فروشگاه من</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">خانه</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Contact">تماس با ما</a>
+                    </li>
+                    @if (ViewBag.IsLogin == true)
+                    {
+                        <li class="nav-item">
+                            <a href="/Account/Logout" class="nav-link login-btn">خروج</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a href="/Account/Login" class="nav-link login-btn">ورود</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="content-wrapper">
+
+        <div class="container mt-4">
+            <h3 class="mb-4 fw-bold text-primary text-center">
+                محصولات دسته‌بندی انتخاب‌شده
+            </h3>
+
+            @if (Model != null && Model.Count > 0)
+            {
+                <div class="row g-4">
+                    @foreach (var product in Model)
+                    {
+                        <div class="col-md-4 col-lg-3 col-sm-6">
+                            <div class="card product-card">
+                                <img src="@product.Image" class="card-img-top" />
+
+                                <div class="card-body">
+                                    <h5 class="product-card-title">@product.Name</h5>
+
+                                    <p class="product-price">
+                                        @product.Price.ToString("N0") تومان
+                                    </p>
+
+                                    <a href="@Url.Action("Detail", "Store", new { id = product.Id })"
+                                       class="btn btn-outline-primary w-100">
+                                        مشاهده محصول
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center text-danger mt-4 fs-5">
+                    هیچ محصولی در این دسته‌بندی وجود ندارد.
+                </div>
+            }
+        </div>
+
+    </div>
+
+    <footer>
+        © 2025 فروشگاه من — تمامی حقوق محفوظ است
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
+
+

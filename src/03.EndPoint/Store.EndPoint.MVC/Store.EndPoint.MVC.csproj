@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\01.Domain\Services\Store.Domain.AppServices\Store.Domain.AppServices.csproj" />
+    <ProjectReference Include="..\..\01.Domain\Services\Store.Domain.Services\Store.Domain.Services.csproj" />
+    <ProjectReference Include="..\..\02.Infrastructure\DataAccess\Store.Infra.DA\Store.Infra.DA.csproj" />
+    <ProjectReference Include="..\..\02.Infrastructure\Db\Store.Infra.Db\Store.Infra.Db.csproj" />
+  </ItemGroup>
+
+</Project>

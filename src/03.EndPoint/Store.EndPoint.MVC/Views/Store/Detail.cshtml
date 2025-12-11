@@ -1,0 +1,170 @@
+﻿@using Store.Domain.Core.Dtos.ProductDtos
+@model DetailProductDto
+@{
+    Layout = "";
+    ViewData["Title"] = Model.Name;
+}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Name</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #eef2ff, #e0e7ff); /* پس‌زمینه کاملا رنگی */
+            margin: 0;
+            padding: 40px 0;
+        }
+
+        .product-box {
+            max-width: 1150px;
+            margin: auto;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 22px;
+            box-shadow: 0 6px 30px rgba(0,0,0,0.12);
+        }
+
+        /* تصویر بزرگ‌تر */
+        .product-image {
+            width: 100%;
+            height: 470px; /* ارتفاع بیشتر */
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .title {
+            font-size: 30px;
+            font-weight: 700;
+            color: #1f1f3b;
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: 800;
+            color: #4f46e5;
+            margin-top: 10px;
+        }
+
+        .desc {
+            margin-top: 15px;
+            color: #4b5563;
+            line-height: 2;
+            font-size: 15.5px;
+        }
+
+        .stock {
+            color: #374151;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* کنترل تعداد */
+        .qty-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .qty-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            padding: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* دکمه افزودن – کوچیک‌تر */
+        .add-btn {
+            background: #4f46e5;
+            border: none;
+            color: #fff;
+            padding: 8px 16px; /* کوچک‌تر از قبل */
+            margin-top: 20px;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: .25s;
+        }
+
+            .add-btn:hover {
+                background: #4338ca;
+            }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="product-box container">
+
+        <div class="row g-4 align-items-start">
+
+            <!-- عکس محصول -->
+            <div class="col-md-6">
+                <img src="@Model.Image" class="product-image" alt="@Model.Name" />
+            </div>
+
+            <!-- اطلاعات محصول -->
+            <div class="col-md-6">
+
+                <h1 class="title">@Model.Name</h1>
+
+                <div class="price">@Model.Price.ToString("N0") تومان</div>
+
+                <div class="stock">موجودی: @Model.Count عدد</div>
+
+                <p class="desc">@Model.Description</p>
+
+                <!-- تعداد -->
+                <label class="fw-bold mt-3">تعداد:</label>
+                <div class="qty-box">
+                    <button onclick="changeQty(-1)" class="btn btn-outline-primary qty-btn">−</button>
+                    <input id="qty" class="form-control text-center" style="width:70px" value="1">
+                    <button onclick="changeQty(1)" class="btn btn-outline-primary qty-btn">+</button>
+                </div>
+
+                <!-- افزودن به سبد -->
+                <form method="post" action="/Order/AddProduct">
+                    <input type="hidden" name="productId" value="@Model.Id" />
+                    <input type="hidden" id="qtyInput" name="quantity" value="1" />
+
+                    <button type="submit" class="add-btn">
+                        افزودن به سبد خرید
+                    </button>
+                </form>
+                <div id="message-box" class="mt-4 text-center text-sm">
+                    <div style="color:red"> @TempData["Error"]</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script>
+        function changeQty(num) {
+            let input = document.getElementById("qty");
+            let val = parseInt(input.value);
+            val += num;
+            if (val < 1) val = 1;
+
+            input.value = val;
+            document.getElementById("qtyInput").value = val;
+        }
+    </script>
+
+</body>
+</html>
+
+
+

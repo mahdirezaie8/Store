@@ -1,0 +1,21 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/01.Domain/" />
+  <Folder Name="/src/01.Domain/Core/">
+    <Project Path="src/01.Domain/Core/Store.Domain.Core/Store.Domain.Core.csproj" />
+  </Folder>
+  <Folder Name="/src/01.Domain/Services/">
+    <Project Path="src/01.Domain/Services/Store.Domain.AppServices/Store.Domain.AppServices.csproj" />
+    <Project Path="src/01.Domain/Services/Store.Domain.Services/Store.Domain.Services.csproj" />
+  </Folder>
+  <Folder Name="/src/02.Infrastructure/" />
+  <Folder Name="/src/02.Infrastructure/DataAccess/">
+    <Project Path="src/02.Infrastructure/DataAccess/Store.Infra.DA/Store.Infra.DA.csproj" />
+  </Folder>
+  <Folder Name="/src/02.Infrastructure/Db/">
+    <Project Path="src/02.Infrastructure/Db/Store.Infra.Db/Store.Infra.Db.csproj" />
+  </Folder>
+  <Folder Name="/src/03.EndPoint/">
+    <Project Path="src/03.EndPoint/Store.EndPoint.MVC/Store.EndPoint.MVC.csproj" />
+  </Folder>
+</Solution>
