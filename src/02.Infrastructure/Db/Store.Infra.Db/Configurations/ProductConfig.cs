@@ -8,8 +8,8 @@ namespace Store.Infra.Db.Configurations
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.Property(p=>p.Name).IsRequired().HasMaxLength(300);
-            builder.Property(p => p.Image).IsRequired().HasMaxLength(300);
+            builder.Property(p=>p.Name).IsRequired().HasMaxLength(400);
+            builder.Property(p => p.Description).IsRequired().HasMaxLength(600);
             builder.HasData(new Product { Id = 1, Name = "آیفون 17 پرو",CategoryId=1,Price=300000000,Count=5,Description="گوشی مدرن",Image= "/File/ایفون 17.jpg" });
             builder.HasData(new Product { Id = 2, Name = "آیفون 16 پرو", CategoryId = 1, Price = 200000000, Count =10, Description = "گوشی مدرن", Image = "/File/16 پرو.jpg" });
             builder.HasData(new Product { Id = 3, Name = "آیفون 16", CategoryId = 1, Price = 120000000, Count = 3, Description = "گوشی مدرن", Image = "/File/ایفون 16.jpg" });

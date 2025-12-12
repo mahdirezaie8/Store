@@ -4,6 +4,6 @@ namespace Store.Domain.Core.Contact.IServices
 {
     public interface IFileService
     {
-        public string Upload(IFormFile file, string folder);
+        public Task<string> Upload(IFormFile file, string folder);
     }
 }

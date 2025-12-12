@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Store.Domain.Core.Contact.IServices;
+using System.Threading.Tasks;
 
 namespace Store.Domain.Services
 {
     public class FileService:IFileService
     {
-        public string Upload(IFormFile file, string folder)
+        public async Task<string> Upload(IFormFile file, string folder)
         {
 
             var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Files", folder);
@@ -20,7 +21,7 @@ namespace Store.Domain.Services
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                file.CopyTo(stream);
+               await file.CopyToAsync(stream);
             }
 
             return $"{Path.Combine("/Files", folder, uniqueFileName)}";

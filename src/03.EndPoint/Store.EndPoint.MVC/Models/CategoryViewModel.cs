@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Store.Domain.Core.Dtos.CategoryDtos
+namespace Store.EndPoint.MVC.Models
 {
-    public class ShowCategory
+    public class CategoryViewModel
     {
-        public int Id { get; set; }
-        [MinLength(10, ErrorMessage = "توضیحات باید حداقل 10 کاراکتر باشد.")]
+        public int Id { get; set; } 
+        [MinLength(5, ErrorMessage = "توضیحات باید حداقل 10 کاراکتر باشد.")]
         [MaxLength(300, ErrorMessage = "توضیحات نمی‌تواند بیش از 300 کاراکتر باشد.")]
         public string Title { get; set; }
     }
