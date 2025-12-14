@@ -1,14 +1,15 @@
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Store.Domain.AppServices;
 using Store.Domain.Core.Contact.IAppServices;
 using Store.Domain.Core.Contact.IServices;
 using Store.Domain.Core.Data;
 using Store.Domain.Services;
 using Store.EndPoint.MVC.Extention;
+using Store.EndPoint.MVC.Middlwares;
 using Store.EndPoint.MVC.Session;
 using Store.Infra.DA.Repositories;
 using Store.Infra.Db.AppDb;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,10 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Host.UseSerilog((context, configuration) =>
+{
+    configuration.ReadFrom.Configuration(context.Configuration);
+});
 
 //builder.Services.AddSession(options =>
 //{
@@ -62,7 +67,7 @@ builder.Services.AddScoped<IFileService, FileService>();
 
 
 var app = builder.Build();
-
+app.UseMiddleware<RequestLoggingMiddleware>();
 
 
 // Configure the HTTP request pipeline.
@@ -78,13 +83,17 @@ app.UseRouting();
 
 app.UseSession();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Product}/{action=Index}/{id?}")
+    pattern: "{controller=Store}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 

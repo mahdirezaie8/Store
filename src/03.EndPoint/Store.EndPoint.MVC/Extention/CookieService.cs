@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using Azure.Core;
+using System.Text.Json;
 
 namespace Store.EndPoint.MVC.Extention
 {
@@ -13,6 +14,10 @@ namespace Store.EndPoint.MVC.Extention
         public bool UserIsLoggedIn()
         {
             return Context.Request.Cookies.Any(x => x.Key == "Id");
+        }
+        public bool IsAdmin()
+        {
+            return Context.Request.Cookies.Any(x => x.Key == "Role" && x.Value == "Admin");
         }
 
         public int GetUserId()

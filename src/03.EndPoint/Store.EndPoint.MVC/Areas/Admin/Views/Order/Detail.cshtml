@@ -1,0 +1,172 @@
+﻿@using Store.Domain.Core.Dtos.OrderDtos
+@model List<ShowOrderItemDto>
+@{
+    ViewData["Title"] = "جزئیات سفارش";
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <title>@ViewData["Title"]</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #eef2ff, #dbeafe);
+            color: #0f172a;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+            .page-header h2 {
+                margin: 0;
+                font-weight: 700;
+                color: #1e3a8a;
+            }
+
+        .btn-back {
+            background: #2563eb;
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+            .btn-back:hover {
+                background: #1d4ed8;
+            }
+
+        .card {
+            background: #f8fafc;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 20px 35px rgba(15, 23, 42, 0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: #1e3a8a;
+            color: #ffffff;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        tbody tr {
+            background: #ffffff;
+            transition: background .15s;
+        }
+
+            tbody tr:nth-child(even) {
+                background: #f1f5f9;
+            }
+
+            tbody tr:hover {
+                background: #e0e7ff;
+            }
+
+        td {
+            color: #334155;
+        }
+
+        img {
+            width: 55px;
+            height: 55px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,.12);
+        }
+
+        .price {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .total {
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-header">
+        <h2>جزئیات سفارش</h2>
+        <a asp-area="Admin"
+           asp-action="Index"
+           asp-controller="Dashboard"
+           class="btn-back">
+            بازگشت
+        </a>
+    </div>
+
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>تصویر</th>
+                    <th>نام محصول</th>
+                    <th>قیمت واحد</th>
+                    <th>تعداد</th>
+                    <th>جمع</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int index = 1;
+                }
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@index</td>
+                        <td>
+                            @if (!string.IsNullOrWhiteSpace(item.Image))
+                            {
+                                <img src="@item.Image" alt="@item.Name" />
+                            }
+                        </td>
+                        <td>@item.Name</td>
+                        <td class="price">@item.UnitPrice.ToString("N0")</td>
+                        <td>@item.Quantity</td>
+                        <td class="total">@((item.UnitPrice * item.Quantity).ToString("N0"))</td>
+                    </tr>
+
+                    index++;
+                }
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
+

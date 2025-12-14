@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Store.EndPoint.MVC.Models
+namespace Store.EndPoint.MVC.Areas.Admin.Models
 {
     public class CreateProductViewModel
     {
@@ -11,7 +11,7 @@ namespace Store.EndPoint.MVC.Models
 
 
         [Required(ErrorMessage = "قیمت الزامی است.")]
-        [Range(100000,9999999999, ErrorMessage = "قیمت باید بین 100000 تا 9,999,999,999 ریال باشد.")]
+        [Range(100000, 9999999999, ErrorMessage = "قیمت باید بین 10000 تا 999,999,999 تومان باشد.")]
         public decimal Price { get; set; }
 
 

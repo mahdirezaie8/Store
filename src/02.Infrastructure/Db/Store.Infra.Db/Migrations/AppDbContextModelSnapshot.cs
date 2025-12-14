@@ -141,17 +141,16 @@ namespace Store.Infra.Db.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(600)
+                        .HasColumnType("nvarchar(600)");
 
                     b.Property<string>("Image")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -485,16 +484,6 @@ namespace Store.Infra.Db.Migrations
                         },
                         new
                         {
-                            Id = 34,
-                            CategoryId = 3,
-                            Count = 1,
-                            Description = "مبل سلطنتی",
-                            Image = "/File/sofa4.jpg",
-                            Name = "مبل مدل 4",
-                            Price = 7900000m
-                        },
-                        new
-                        {
                             Id = 35,
                             CategoryId = 3,
                             Count = 2,
@@ -653,10 +642,16 @@ namespace Store.Infra.Db.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -676,7 +671,9 @@ namespace Store.Infra.Db.Migrations
                             Id = 1,
                             Email = "mahdi@gmail.com",
                             FullName = "مهدی رضایی",
+                            IsActive = true,
                             Password = "1234567",
+                            Role = 0,
                             Username = "mahdirr",
                             Wallet = 1000000000m
                         },
@@ -685,7 +682,9 @@ namespace Store.Infra.Db.Migrations
                             Id = 2,
                             Email = "fatemeh@gmail.com",
                             FullName = "فاطمه محمدی",
+                            IsActive = true,
                             Password = "1234567",
+                            Role = 1,
                             Username = "fatemehm",
                             Wallet = 500000000m
                         },
@@ -694,7 +693,9 @@ namespace Store.Infra.Db.Migrations
                             Id = 3,
                             Email = "hasan@gmail.com",
                             FullName = "حسن نوری",
+                            IsActive = true,
                             Password = "1234567",
+                            Role = 1,
                             Username = "hasannori",
                             Wallet = 200000000m
                         });

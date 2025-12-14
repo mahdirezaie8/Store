@@ -152,5 +152,12 @@ namespace Store.Infra.DA.Repositories
             await dbContext.SaveChangesAsync();
             return product.Id;
         }
+        public async Task<string?> GetProductPathImg(int id)
+        {
+            return await dbContext.Products
+                .Where(p => p.Id == id)
+                .Select(p => p.Image)
+                .FirstOrDefaultAsync();
+        }
     }
 }

@@ -1,50 +1,56 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Store.Domain.Core.Contact.IAppServices;
 using Store.Domain.Core.Dtos.ProductDtos;
-using Store.EndPoint.MVC.Models;
-using System.Threading.Tasks;
+using Store.EndPoint.MVC.Areas.Admin.Models;
+using Store.EndPoint.MVC.Middlwares;
 
-namespace Store.EndPoint.MVC.Controllers
+namespace Store.EndPoint.MVC.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class ProductController : Controller
     {
         private readonly IProductAppService productAppService;
         private readonly ICategoryAppService categoryAppService;
+        private readonly ILogger<ProductController> _logger;
 
-        public ProductController(IProductAppService ProductAppService,ICategoryAppService CategoryAppService)
+        public ProductController(IProductAppService ProductAppService,
+            ICategoryAppService CategoryAppService,
+            ILogger<ProductController> logger)
         {
             productAppService = ProductAppService;
             categoryAppService = CategoryAppService;
+            _logger = logger;
         }
-        public async Task<IActionResult> Index(CancellationToken cancellationToken, int page=1)
+        public async Task<IActionResult> Index(CancellationToken cancellationToken, int page = 1)
         {
             ViewBag.Page = page;
             int pagesize = 10;
-            var total=productAppService.TotalPage(pagesize);
+            var total = productAppService.TotalPage(pagesize);
             ViewBag.TotalPages = total;
-            var products =await productAppService.GetDetailAllProduct(cancellationToken,page,pagesize);
+            var products = await productAppService.GetDetailAllProduct(cancellationToken, page, pagesize);
             return View(products.Data);
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateCount(int id,int count,int Page)
+        public async Task<IActionResult> UpdateCount(int id, int count, int Page)
         {
-            var update =await productAppService.UpdateProductCount(count,id);
-            if(update.IsSuccess)
+            var update = await productAppService.UpdateProductCount(count, id);
+            if (update.IsSuccess)
             {
+                _logger.LogInformation($"information:تعداد محصول با آیدی {id} با موفقیت به تعداد {count} آپدیت شد.");
                 return RedirectToAction("Index", new { page = Page });
             }
             else
             {
-                TempData["Error"]=update.Message;
+                TempData["Error"] = update.Message;
                 return RedirectToAction("Index", new { page = Page });
             }
         }
-        public async Task<IActionResult> Delete(int id,int Page,CancellationToken cancellationToken)
+        public async Task<IActionResult> Delete(int id, int Page, CancellationToken cancellationToken)
         {
-            var result =await productAppService.Delete(id, cancellationToken);
+            var result = await productAppService.Delete(id, cancellationToken);
             if (result.IsSuccess)
             {
+                _logger.LogInformation($"information:محصول با آیدی {id} با موفقیت حذف شد.");
                 return RedirectToAction("Index", new { page = Page });
             }
             else
@@ -53,11 +59,11 @@ namespace Store.EndPoint.MVC.Controllers
                 return RedirectToAction("Index", new { page = Page });
             }
         }
-        public async Task<IActionResult> Update(int id,int Page)
+        public async Task<IActionResult> Update(int id, int Page)
         {
-            ViewBag.Page=Page;
-            var product=await productAppService.GetProductForUpdate(id);
-            if(product.IsSuccess)
+            ViewBag.Page = Page;
+            var product = await productAppService.GetProductForUpdate(id);
+            if (product.IsSuccess)
             {
                 return View(product.Data);
             }
@@ -68,15 +74,16 @@ namespace Store.EndPoint.MVC.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateProductDto updateProductDto, int id, int Page,CancellationToken cancellationToken)
+        public async Task<IActionResult> Update(UpdateProductDto updateProductDto, int id, int Page, CancellationToken cancellationToken)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(updateProductDto);
             }
-            var update =await productAppService.Updateproduct(updateProductDto, id, cancellationToken);
+            var update = await productAppService.Updateproduct(updateProductDto, id, cancellationToken);
             if (update.IsSuccess)
             {
+                _logger.LogInformation($"information:محصول با آیدی {id} با موفقیت آپدیت شد.");
                 return RedirectToAction("Index", new { page = Page });
             }
             else
@@ -87,12 +94,12 @@ namespace Store.EndPoint.MVC.Controllers
         }
         public async Task<IActionResult> Create()
         {
-            var categoris =await categoryAppService.GetAllCategories();
-            ViewBag.Categories=categoris.Data;
+            var categoris = await categoryAppService.GetAllCategories();
+            ViewBag.Categories = categoris.Data;
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateProductViewModel createProductViewModel,CancellationToken cancellationToken)
+        public async Task<IActionResult> Create(CreateProductViewModel createProductViewModel, CancellationToken cancellationToken)
         {
             var newDto = new CreateProductDto()
             {
@@ -103,9 +110,10 @@ namespace Store.EndPoint.MVC.Controllers
                 Price = createProductViewModel.Price,
                 ProfileImage = createProductViewModel.ProfileImage,
             };
-            var result=await productAppService.CreateProduct(newDto,cancellationToken);
+            var result = await productAppService.CreateProduct(newDto, cancellationToken);
             if (result.IsSuccess)
             {
+                _logger.LogInformation($"information:محصول جدیدی با اطلاعات {createProductViewModel.Description},,,{createProductViewModel.Name}ایجاد شد.");
                 return RedirectToAction("Index", new { page = 1 });
             }
             else
@@ -118,3 +126,4 @@ namespace Store.EndPoint.MVC.Controllers
         }
     }
 }
+

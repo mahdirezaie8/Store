@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-
+using Store.Domain.Core.Dtos.OrderDtos;
 
 namespace Store.Domain.AppServices
 {
@@ -40,7 +40,7 @@ namespace Store.Domain.AppServices
                             var productid = item.ProductId;
                             var count = item.Quantity;
                             var productname = item.ProductName;
-                            var result = await productAppService.CheckCount(productid, count, productname);
+                            var result = await productAppService.CheckCount(count,productid, productname);
                             if (!result.IsSuccess)
                             {
                                 var message = result.Message;
@@ -55,7 +55,7 @@ namespace Store.Domain.AppServices
                             var neworder = await orderService.CreateOrder(cart, Userid);
                             if (neworder.IsSuccess)
                             {
-                                productAppService.UpdateCount(cart);
+                               await productAppService.UpdateCount(cart);
                                 await transaction.CommitAsync();
                                 return ResultDto<bool>.Success("عملیات با موفقیت انجام شد.");
                             }
@@ -89,6 +89,16 @@ namespace Store.Domain.AppServices
             {
                 return ResultDto<bool>.Failure("محصولی برای ثبت ندارید");
             }
+        }
+
+        public async Task<ResultDto<List<ShowOrderDto>>> GetAllOrder(CancellationToken cancellationToken)
+        {
+            return await orderService.GetAllOrder(cancellationToken);
+        }
+
+        public async Task<ResultDto<List<ShowOrderItemDto>>> GetOrderItemByOrderId(int orderId, CancellationToken cancellationToken)
+        {
+            return await orderService.GetOrderItemByOrderId(orderId, cancellationToken);
         }
     }
 }

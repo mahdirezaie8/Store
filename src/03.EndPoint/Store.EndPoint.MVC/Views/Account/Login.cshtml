@@ -20,7 +20,6 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            /* پس‌زمینه گرادیانت ملایم */
             background: linear-gradient(135deg, #f5f7fa, #e4e9f0);
         }
 
@@ -37,7 +36,7 @@
             text-align: center;
             margin-bottom: 25px;
             font-weight: 700;
-            color: #4f46e5; /* رنگ بنفش ملایم */
+            color: #4f46e5; 
         }
 
         .form-group {
@@ -127,12 +126,27 @@
                 <input asp-for="Password" type="password" placeholder="••••••••" />
                 <span asp-validation-for="Password" class="error"></span>
             </div>
+            <div class="form-group" style="display:flex; align-items:center; gap:8px;">
+                <input asp-for="RememberMe" type="checkbox" style="width:auto;" />
+                <label asp-for="RememberMe" style="margin:0;">مرا به خاطر بسپار</label>
+            </div>
+
 
             <button type="submit" class="btn-login">ورود</button>
+
+            <div style="text-align:center; margin-top:15px;">
+                <span>حساب کاربری ندارید؟</span>
+                <a asp-action="Register"
+                   asp-controller="Account"
+                   style="color:#7c5dfa; font-weight:600; text-decoration:none;">
+                    ثبت‌نام
+                </a>
+            </div>
 
         </form>
 
     </div>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>

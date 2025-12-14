@@ -24,5 +24,6 @@ namespace Store.Domain.Core.Data
         public Task<UpdateProductDto?> GetProductForUpdate(int id);
         public Task<Product?> GetProduct(int id);
         public Task<int> Add(Product product, CancellationToken cancellationToken);
+        public Task<string?> GetProductPathImg(int id);
     }
 }

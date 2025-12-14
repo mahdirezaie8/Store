@@ -1,4 +1,5 @@
-﻿@model CreateProductViewModel
+﻿@using Store.EndPoint.MVC.Areas.Admin.Models
+@model CreateProductViewModel
 @{
     ViewData["Title"] = "ایجاد محصول";
     Layout = "";
@@ -45,37 +46,32 @@
                 <div asp-validation-summary="All" class="alert alert-danger"></div>
             }
 
-            <form asp-action="Create" asp-controller="Product" method="post" enctype="multipart/form-data">
+            <form asp-area="Adnin" asp-action="Create" asp-controller="Product" method="post" enctype="multipart/form-data">
 
-                <!-- NAME -->
                 <div class="mb-3">
                     <label asp-for="Name" class="form-label">نام محصول</label>
                     <input asp-for="Name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
 
-                <!-- PRICE -->
                 <div class="mb-3">
                     <label asp-for="Price" class="form-label">قیمت</label>
                     <input asp-for="Price" type="number" class="form-control" min="0" />
                     <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
 
-                <!-- COUNT -->
                 <div class="mb-3">
                     <label asp-for="Count" class="form-label">تعداد موجودی</label>
                     <input asp-for="Count" type="number" class="form-control" min="0" />
                     <span asp-validation-for="Count" class="text-danger"></span>
                 </div>
 
-                <!-- DESCRIPTION -->
                 <div class="mb-3">
                     <label asp-for="Description" class="form-label">توضیحات</label>
                     <textarea asp-for="Description" rows="4" class="form-control"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
 
-                <!-- CATEGORY -->
                 <div class="mb-3">
                     <label asp-for="CategoryId" class="form-label">دسته‌بندی</label>
 
@@ -91,7 +87,6 @@
                     <span asp-validation-for="CategoryId" class="text-danger"></span>
                 </div>
 
-                <!-- IMAGE -->
                 <div class="mb-3">
                     <label class="form-label">تصویر محصول</label>
                     <input asp-for="ProfileImage" type="file" class="form-control" />
@@ -116,4 +111,3 @@
 
 </body>
 </html>
-

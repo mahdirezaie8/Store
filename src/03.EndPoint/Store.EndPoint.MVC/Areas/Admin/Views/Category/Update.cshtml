@@ -1,4 +1,5 @@
-﻿@model CategoryViewModel
+﻿@using Store.EndPoint.MVC.Areas.Admin.Models
+@model CategoryViewModel
 @{
     ViewData["Title"] = "ویرایش دسته‌بندی";
     Layout = "";
@@ -52,7 +53,7 @@
                 <div asp-validation-summary="All" class="validation-summary"></div>
             }
 
-            <form asp-action="Update" asp-controller="Category" method="post">
+            <form asp-area="Admin" asp-action="Update" asp-controller="Category" method="post">
                 <input type="hidden" asp-for="Id" />
 
                 <div class="mb-3">

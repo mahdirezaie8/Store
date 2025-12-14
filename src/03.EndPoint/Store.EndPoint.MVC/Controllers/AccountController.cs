@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Store.Domain.Core.Contact.IAppServices;
+using Store.Domain.Core.Dtos.UserDtos;
+using Store.Domain.Core.Enums;
 using Store.EndPoint.MVC.Extention;
 using Store.EndPoint.MVC.Models;
-using Store.EndPoint.MVC.Session;
 
 namespace Store.EndPoint.MVC.Controllers
 {
@@ -10,19 +11,25 @@ namespace Store.EndPoint.MVC.Controllers
     {
         private readonly IUserAppService userAppService;
         private readonly ICookieService cookieService;
-        private readonly ISessionCart sessionCart;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(IUserAppService UserAppService,ICookieService CookieService, ISessionCart SessionCart)
+        public AccountController(IUserAppService UserAppService,ICookieService CookieService, ILogger<AccountController> logger)
         {
             userAppService = UserAppService;
             cookieService = CookieService;
-            sessionCart = SessionCart;
+            _logger = logger;
         }
         public IActionResult Login()
         {
             if (cookieService.UserIsLoggedIn())
             {
-                return RedirectToAction("Index", "Store");
+                var isAdmin=cookieService.IsAdmin();
+                if(isAdmin)
+                {
+                    return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                }
+                else
+                    return RedirectToAction("Index", "Store");
             }
             else
                 return View();
@@ -36,7 +43,14 @@ namespace Store.EndPoint.MVC.Controllers
             {
                 cookieService.Set("Id", success.Data.Id.ToString());
                 cookieService.Set("Username", success.Data.Username);
-                return RedirectToAction("Index","Store");
+                cookieService.Set("Role", success.Data.Role.ToString());
+                _logger.LogInformation($"information :یوزرنیم {success.Data.Username}با نقش {success.Data.Role}وارد شد.");
+                if (success.Data.Role==RoleEnum.Admin)
+                {
+                    return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                }
+                else
+                    return RedirectToAction("Index", "Store");
             }
             else
             {
@@ -48,8 +62,39 @@ namespace Store.EndPoint.MVC.Controllers
         {
             cookieService.Delete("Id");
             cookieService.Delete("Username");
-            sessionCart.Clear();
+            cookieService.Delete("Role");
             return RedirectToAction("Index","Store");
+        }
+        public IActionResult Register()
+        {
+            return View(); 
+        }
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(registerViewModel); 
+            }
+            var newdto = new RegisterDto
+            {
+                Email = registerViewModel.Email,
+                FullName = registerViewModel.FullName,
+                Password = registerViewModel.Password,
+                Username = registerViewModel.Username,
+            };
+            var register=await userAppService.Register(newdto);
+            if(register.IsSuccess)
+            {
+                _logger.LogInformation($"information:یوزرنیم {registerViewModel.Username} با نقش نرمال یوزر ثبت نام کرد.");
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                ModelState.AddModelError("", register.Message!);
+                return View(register); 
+            }
         }
     }
 }

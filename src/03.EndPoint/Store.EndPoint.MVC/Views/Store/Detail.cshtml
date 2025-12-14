@@ -19,7 +19,7 @@
 
         body {
             font-family: 'Vazirmatn', sans-serif;
-            background: linear-gradient(135deg, #eef2ff, #e0e7ff); /* پس‌زمینه کاملا رنگی */
+            background: linear-gradient(135deg, #eef2ff, #e0e7ff); 
             margin: 0;
             padding: 40px 0;
         }
@@ -33,10 +33,9 @@
             box-shadow: 0 6px 30px rgba(0,0,0,0.12);
         }
 
-        /* تصویر بزرگ‌تر */
         .product-image {
             width: 100%;
-            height: 470px; /* ارتفاع بیشتر */
+            height: 470px; 
             object-fit: cover;
             border-radius: 15px;
         }
@@ -67,7 +66,6 @@
             margin-top: 10px;
         }
 
-        /* کنترل تعداد */
         .qty-box {
             display: flex;
             align-items: center;
@@ -84,12 +82,11 @@
             font-weight: bold;
         }
 
-        /* دکمه افزودن – کوچیک‌تر */
         .add-btn {
             background: #4f46e5;
             border: none;
             color: #fff;
-            padding: 8px 16px; /* کوچک‌تر از قبل */
+            padding: 8px 16px; 
             margin-top: 20px;
             border-radius: 10px;
             font-size: 15px;
@@ -109,12 +106,10 @@
 
         <div class="row g-4 align-items-start">
 
-            <!-- عکس محصول -->
             <div class="col-md-6">
                 <img src="@Model.Image" class="product-image" alt="@Model.Name" />
             </div>
 
-            <!-- اطلاعات محصول -->
             <div class="col-md-6">
 
                 <h1 class="title">@Model.Name</h1>
@@ -125,7 +120,6 @@
 
                 <p class="desc">@Model.Description</p>
 
-                <!-- تعداد -->
                 <label class="fw-bold mt-3">تعداد:</label>
                 <div class="qty-box">
                     <button onclick="changeQty(-1)" class="btn btn-outline-primary qty-btn">−</button>
@@ -133,7 +127,6 @@
                     <button onclick="changeQty(1)" class="btn btn-outline-primary qty-btn">+</button>
                 </div>
 
-                <!-- افزودن به سبد -->
                 <form method="post" action="/Order/AddProduct">
                     <input type="hidden" name="productId" value="@Model.Id" />
                     <input type="hidden" id="qtyInput" name="quantity" value="1" />

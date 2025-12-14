@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Extensions.Logging;
 using Store.Domain.Core.Contact.IServices;
 using Store.Domain.Core.Data;
 using Store.Domain.Core.Dtos;
 using Store.Domain.Core.Dtos.ProductDtos;
 using Store.Domain.Core.Entities;
-using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace Store.Domain.Services
 {
@@ -13,11 +12,15 @@ namespace Store.Domain.Services
     {
         private readonly IProductRepository _productRepository;
         private readonly IFileService fileService;
+        private readonly ILogger<ProductService> _logger;
 
-        public ProductService(IProductRepository ProductRepository,IFileService FileService)
+        public ProductService(IProductRepository ProductRepository
+            ,IFileService FileService
+            , ILogger<ProductService> logger)
         {
             _productRepository = ProductRepository;
             fileService = FileService;
+            _logger = logger;
         }
         public async Task<ResultDto<List<SowProductDto>>> GetAllProduct()
         {
@@ -96,6 +99,10 @@ namespace Store.Domain.Services
         {
             var oldcountproduct = await _productRepository.GetCount(productid);
             var newcount = oldcountproduct - count;
+            if(newcount<=5)
+            {
+                _logger.LogWarning($"Warning:موجودی محصول با این ایدی {productid} به تعداد {newcount} رسیده است");
+            }
             await _productRepository.UpdateCount(productid, newcount);
         }
         public async Task<int> CountProduct(int productid)
@@ -145,6 +152,11 @@ namespace Store.Domain.Services
             if (exist)
             {
                 await _productRepository.Delete(productid, cancellationToken);
+                var pathImg=await _productRepository.GetProductPathImg(productid);
+                if (!string.IsNullOrEmpty(pathImg))
+                {
+                   await fileService.Delete(pathImg,cancellationToken);
+                }
                 return ResultDto<bool>.Success("success");
             }
             else

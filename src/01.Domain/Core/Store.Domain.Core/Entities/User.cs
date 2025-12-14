@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Store.Domain.Core.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Store.Domain.Core.Entities
 {
@@ -9,6 +10,8 @@ namespace Store.Domain.Core.Entities
         public string Password { get; set; }
         public string Username { get; set; }
         public decimal Wallet {  get; set; }
+        public bool IsActive { get; set; } = true;
+        public RoleEnum Role { get; set; }
         public List<Order> orders { get; set; } = [];
     }
 }

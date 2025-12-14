@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Store.Domain.Core.Contact.IServices;
 using System.Threading.Tasks;
 
@@ -25,6 +26,17 @@ namespace Store.Domain.Services
             }
 
             return $"{Path.Combine("/Files", folder, uniqueFileName)}";
+        }
+        public async Task Delete(string filename,CancellationToken cancellationToken)
+        {
+            if(string.IsNullOrEmpty(filename))
+                return;
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", filename);
+            
+            if(File.Exists(fullPath))
+            {
+                await Task.Run(()=>File.Delete(fullPath));
+            }
         }
     }
 }

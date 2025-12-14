@@ -14,10 +14,27 @@ namespace Store.Domain.AppServices
         {
             userService = UserService;
         }
+
+        public async Task<ResultDto<bool>> DeleteUser(int userId, CancellationToken cancellationToken)
+        {
+            return await userService.DeleteUser(userId, cancellationToken);
+        }
+
+        public async Task<ResultDto<List<ShowUserDto>>> GetAllUser(CancellationToken cancellationToken)
+        {
+            return await userService.GetAllUser(cancellationToken);
+        }
+
         public async Task<ResultDto<UserDto>> Login(string username, string password)
         {
            return await userService.Login(username, password);
         }
+
+        public async Task<ResultDto<bool>> UpdateUserIsActive(int userId, CancellationToken cancellationToken)
+        {
+            return await userService.UpdateUserIsActive(userId, cancellationToken);
+        }
+
         public async Task<ResultDto<bool>> UpdateUserWallet(int userid,decimal TotalPrice)
         {
             var userwallet=await userService.GetWalletAmount(userid);
@@ -34,6 +51,10 @@ namespace Store.Domain.AppServices
                     return ResultDto<bool>.Failure("موجودی شما کافی نمی باشد.");
             }
             return ResultDto<bool>.Failure("یوزر پیدا نشد.");
+        }
+        public async Task<ResultDto<bool>> Register(RegisterDto register)
+        {
+            return await userService.Register(register);
         }
     }
 }

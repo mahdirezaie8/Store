@@ -1,0 +1,209 @@
+﻿@{
+    ViewData["Title"] = "داشبورد ادمین";
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <title>@ViewData["Title"]</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #eef2ff, #dbeafe);
+            color: #0f172a;
+        }
+
+        .header {
+            margin-bottom: 35px;
+        }
+
+            .header h1 {
+                margin: 0;
+                font-size: 28px;
+                color: #1e3a8a;
+            }
+
+            .header p {
+                margin-top: 8px;
+                color: #475569;
+                font-size: 15px;
+            }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 35px rgba(15, 23, 42, 0.08);
+            text-decoration: none;
+            color: inherit;
+            transition: all .25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .card::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(37,99,235,.08), transparent);
+                opacity: 0;
+                transition: .25s;
+            }
+
+            .card:hover::after {
+                opacity: 1;
+            }
+
+            .card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 30px 50px rgba(15, 23, 42, 0.12);
+            }
+
+        .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .users {
+            background: #2563eb;
+        }
+
+        .categories {
+            background: #7c3aed;
+        }
+
+        .products {
+            background: #059669;
+        }
+
+        .orders {
+            background: #ea580c;
+        }
+
+        .card h3 {
+            margin: 0 0 6px 0;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .card span {
+            font-size: 14px;
+            color: #475569;
+        }
+
+        .welcome-box {
+            margin-top: 40px;
+            background: #f8fafc;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 20px 35px rgba(15, 23, 42, 0.08);
+        }
+
+            .welcome-box h2 {
+                margin-top: 0;
+                color: #1e3a8a;
+            }
+
+            .welcome-box p {
+                color: #475569;
+                line-height: 1.9;
+            }
+
+        .btn-logout {
+            background: #ef4444;
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+            .btn-logout:hover {
+                background: #dc2626;
+            }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>داشبورد مدیریت</h1>
+        <p>به پنل مدیریت خوش آمدید 👋 از اینجا می‌توانید کل سیستم را مدیریت کنید</p>
+        <form asp-area="Admin"
+              asp-controller="Dashboard"
+              asp-action="Logout"
+              method="get">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn-logout">
+                خروج
+            </button>
+        </form>
+    </div>
+
+    <div class="dashboard">
+
+        <a asp-area="Admin" asp-controller="User" asp-action="Index" class="card">
+            <div class="icon users">👤</div>
+            <h3>مدیریت کاربران</h3>
+            <span>فعال‌سازی، غیرفعال‌سازی و حذف کاربران</span>
+        </a>
+
+        <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="card">
+            <div class="icon categories">📂</div>
+            <h3>مدیریت دسته‌بندی‌ها</h3>
+            <span>ایجاد و ویرایش دسته‌بندی‌ها</span>
+        </a>
+
+        <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="card">
+            <div class="icon products">📦</div>
+            <h3>مدیریت محصولات</h3>
+            <span>افزودن، ویرایش و حذف محصولات</span>
+        </a>
+
+        <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="card">
+            <div class="icon orders">🧾</div>
+            <h3>مدیریت سفارشات</h3>
+            <span>مشاهده و بررسی سفارش‌ها</span>
+        </a>
+
+    </div>
+
+    <div class="welcome-box">
+        <h2>✨ نکته</h2>
+        <p>
+            از طریق این داشبورد می‌توانید تمام بخش‌های فروشگاه را مدیریت کنید.
+            برای دسترسی به هر بخش کافیست روی کارت مربوطه کلیک کنید.
+        </p>
+    </div>
+
+</body>
+</html>
+

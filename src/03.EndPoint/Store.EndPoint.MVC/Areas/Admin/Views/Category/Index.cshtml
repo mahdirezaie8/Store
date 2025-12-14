@@ -27,6 +27,7 @@
             margin: auto;
         }
 
+
         .table th, .table td {
             vertical-align: middle;
         }
@@ -38,12 +39,16 @@
         .btn {
             border-radius: 8px;
         }
+
     </style>
 </head>
 
 <body>
-
+  
     <div class="container mt-5">
+        <div class="page-header">
+            <h2>لیست سفارشات</h2>
+        </div>
         <div class="panel-box">
 
             <h3 class="fw-bold text-center mb-4">مدیریت دسته‌بندی‌ها</h3>
@@ -51,13 +56,11 @@
             {
                 <div asp-validation-summary="All" class="validation-summary"></div>
             }
-            <!-- Add Category -->
             <form asp-action="Create" asp-controller="Category" method="post" class="mb-4 d-flex gap-2">
                 <input name="Title" class="form-control" placeholder="عنوان دسته‌بندی جدید" required />
                 <button class="btn btn-success px-3">افزودن</button>
             </form>
 
-            <!-- Category List -->
             <table class="table table-striped text-center">
                 <thead>
                     <tr>
@@ -67,27 +70,27 @@
                     </tr>
                 </thead>
                 @if (Model != null && Model.Count > 0)
-{
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.Id</td>
-                            <td>@item.Title</td>
+                {
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Title</td>
 
-                            <td>
-                                <a href="/Category/Update/@item.Id" class="btn btn-primary btn-sm">ویرایش</a>
+                                <td>
+                                    <a asp-area="Admin" asp-controller="Category" asp-action="Update" asp-route-Id="@item.Id" class="btn btn-primary btn-sm">ویرایش</a>
 
-                                <form action="/Category/Delete/@item.Id" method="get" style="display:inline;">
-                                    <button class="btn btn-danger btn-sm"
-                                            onclick="return confirm('حذف این دسته‌بندی؟');">
-                                        حذف
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
+                                    <form action="/Admin/Category/Delete/@item.Id" method="get" style="display:inline;">
+                                        <button class="btn btn-danger btn-sm"
+                                                onclick="return confirm('حذف این دسته‌بندی؟');">
+                                            حذف
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
                 }
                 else
                 {
@@ -104,4 +107,3 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script>
 </body>
 </html>
-

@@ -3,6 +3,7 @@ using Store.Domain.Core.Contact.IAppServices;
 using Store.Domain.Core.Dtos.CartPageDtos;
 using Store.Domain.Core.Entities;
 using Store.EndPoint.MVC.Extention;
+using Store.EndPoint.MVC.Middlwares;
 using Store.EndPoint.MVC.Models;
 using Store.EndPoint.MVC.Session;
 using System.Threading.Tasks;
@@ -16,18 +17,21 @@ namespace Store.EndPoint.MVC.Controllers
         private readonly ICookieService cookieService;
         private readonly IUserAppService userAppService;
         private readonly IOrderAppService orderAppService;
+        private readonly ILogger<OrderController> _logger;
 
         public OrderController(ISessionCart Session
             , IProductAppService ProductAppService
             , ICookieService CookieService
             , IUserAppService UserAppService
-            , IOrderAppService orderAppService)
+            , IOrderAppService orderAppService,
+            ILogger<OrderController> logger)
         {
             session = Session;
             productAppService = ProductAppService;
             cookieService = CookieService;
             userAppService = UserAppService;
             this.orderAppService = orderAppService;
+            _logger = logger;
         }
         public IActionResult Index()
         {

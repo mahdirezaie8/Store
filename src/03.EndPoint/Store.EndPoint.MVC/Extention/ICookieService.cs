@@ -12,5 +12,6 @@
         bool Exists(string key);
         public int GetUserId();
         public bool UserIsLoggedIn();
+        public bool IsAdmin();
     }
 }
