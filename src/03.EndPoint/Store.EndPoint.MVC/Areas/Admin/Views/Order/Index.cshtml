@@ -141,7 +141,7 @@
 
     <div class="card">
 
-        @if (!Model.Any())
+        @if (Model == null || !Model.Any())
         {
             <div class="empty">سفارشی ثبت نشده است</div>
         }

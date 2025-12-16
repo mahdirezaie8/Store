@@ -26,10 +26,10 @@
 	
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Store.FrameWork\Store.FrameWork.csproj" />
     <ProjectReference Include="..\..\01.Domain\Services\Store.Domain.AppServices\Store.Domain.AppServices.csproj" />
     <ProjectReference Include="..\..\01.Domain\Services\Store.Domain.Services\Store.Domain.Services.csproj" />
     <ProjectReference Include="..\..\02.Infrastructure\DataAccess\Store.Infra.DA\Store.Infra.DA.csproj" />
-    <ProjectReference Include="..\..\02.Infrastructure\Db\Store.Infra.Db\Store.Infra.Db.csproj" />
   </ItemGroup>
 
 </Project>

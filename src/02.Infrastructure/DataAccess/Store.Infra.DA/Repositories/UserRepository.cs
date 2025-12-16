@@ -3,7 +3,8 @@ using Store.Domain.Core.Data;
 using Store.Domain.Core.Dtos.UserDtos;
 using Store.Domain.Core.Entities;
 using Store.Infra.Db.AppDb;
-using System.Threading.Tasks;
+using System;
+
 
 namespace Store.Infra.DA.Repositories
 {

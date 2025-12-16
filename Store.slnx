@@ -1,5 +1,8 @@
 <Solution>
   <Folder Name="/src/" />
+  <Folder Name="/src/00.FrameWork/">
+    <Project Path="Store.FrameWork/Store.FrameWork.csproj" Id="484138c1-52c0-4e7b-9047-70ff055ba684" />
+  </Folder>
   <Folder Name="/src/01.Domain/" />
   <Folder Name="/src/01.Domain/Core/">
     <Project Path="src/01.Domain/Core/Store.Domain.Core/Store.Domain.Core.csproj" />
@@ -13,7 +16,7 @@
     <Project Path="src/02.Infrastructure/DataAccess/Store.Infra.DA/Store.Infra.DA.csproj" />
   </Folder>
   <Folder Name="/src/02.Infrastructure/Db/">
-    <Project Path="src/02.Infrastructure/Db/Store.Infra.Db/Store.Infra.Db.csproj" />
+    <Project Path="src/02.Infrastructure/Db/Store.Infra.Db/Store.Infra.Db.csproj" Id="f7af44f4-5e20-492c-bba3-4e0547c86154" />
   </Folder>
   <Folder Name="/src/03.EndPoint/">
     <Project Path="src/03.EndPoint/Store.EndPoint.MVC/Store.EndPoint.MVC.csproj" />

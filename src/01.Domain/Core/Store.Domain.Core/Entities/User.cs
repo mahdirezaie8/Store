@@ -1,4 +1,5 @@
-﻿using Store.Domain.Core.Enums;
+﻿using Microsoft.AspNetCore.Identity;
+using Store.Domain.Core.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace Store.Domain.Core.Entities
@@ -12,6 +13,8 @@ namespace Store.Domain.Core.Entities
         public decimal Wallet {  get; set; }
         public bool IsActive { get; set; } = true;
         public RoleEnum Role { get; set; }
+        public IdentityUser<int> IdentityUser { get; set; }
+        public int IdentityUserId { get; set; }
         public List<Order> orders { get; set; } = [];
     }
 }

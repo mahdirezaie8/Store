@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Store.Domain.Core.Entities;
 
-namespace Store.Infra.Db.Configurations
+namespace Store.Infra.Db.Configuration
 {
     public class CategoryConfig : IEntityTypeConfiguration<Category>
     {

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Store.Domain.AppServices;
@@ -8,6 +9,7 @@ using Store.Domain.Services;
 using Store.EndPoint.MVC.Extention;
 using Store.EndPoint.MVC.Middlwares;
 using Store.EndPoint.MVC.Session;
+using Store.FrameWork;
 using Store.Infra.DA.Repositories;
 using Store.Infra.Db.AppDb;
 
@@ -43,6 +45,23 @@ builder.Host.UseSerilog((context, configuration) =>
 //});
 
 // Add services to the container.
+
+builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(
+    options =>
+    {
+        options.SignIn.RequireConfirmedEmail = false;
+        options.SignIn.RequireConfirmedPhoneNumber = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireUppercase = false;
+        options.Lockout.MaxFailedAccessAttempts = 5;
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(60);
+        options.Password.RequireDigit = false;
+        options.Password.RequiredLength = 4;
+        options.Password.RequireNonAlphanumeric = false;
+    })
+    .AddErrorDescriber<PersianIdentityErrorDescriber>()
+    .AddEntityFrameworkStores<AppDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
