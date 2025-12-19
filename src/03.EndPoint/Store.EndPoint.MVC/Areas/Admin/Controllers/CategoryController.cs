@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Store.Domain.Core.Contact.IAppServices;
 using Store.EndPoint.MVC.Areas.Admin.Models;
 using Store.EndPoint.MVC.Middlwares;
@@ -6,6 +7,7 @@ using Store.EndPoint.MVC.Middlwares;
 namespace Store.EndPoint.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
       

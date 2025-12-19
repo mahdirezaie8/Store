@@ -83,7 +83,8 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderAppService, OrderAppService>();
 builder.Services.AddScoped<IFileService, FileService>();
-
+builder.Services.AddScoped<IIdentityUserservice, IdentityUserservice>();
+builder.Services.AddScoped<IIdentityUserAppService, IdentityUserAppService>();
 
 var app = builder.Build();
 app.UseMiddleware<RequestLoggingMiddleware>();

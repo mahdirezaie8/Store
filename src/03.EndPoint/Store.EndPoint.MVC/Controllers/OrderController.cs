@@ -14,21 +14,18 @@ namespace Store.EndPoint.MVC.Controllers
     {
         private readonly ISessionCart session;
         private readonly IProductAppService productAppService;
-        private readonly ICookieService cookieService;
         private readonly IUserAppService userAppService;
         private readonly IOrderAppService orderAppService;
         private readonly ILogger<OrderController> _logger;
 
         public OrderController(ISessionCart Session
             , IProductAppService ProductAppService
-            , ICookieService CookieService
             , IUserAppService UserAppService
             , IOrderAppService orderAppService,
             ILogger<OrderController> logger)
         {
             session = Session;
             productAppService = ProductAppService;
-            cookieService = CookieService;
             userAppService = UserAppService;
             this.orderAppService = orderAppService;
             _logger = logger;
@@ -106,8 +103,8 @@ namespace Store.EndPoint.MVC.Controllers
         public async Task<IActionResult> Checkout()
         {
             var cart = session.GetCart();
-            var login = cookieService.UserIsLoggedIn();
-            int Userid=cookieService.GetUserId();
+            var login = User.UserIsLoggedIn();
+            int Userid=User.GetUserId()??0;
             var checkout =await orderAppService.CreateOrder(cart, Userid, login);
             if(checkout.IsSuccess)
             {

@@ -1,28 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Store.EndPoint.MVC.Extention;
 using Store.EndPoint.MVC.Session;
+using System.Threading.Tasks;
 
 namespace Store.EndPoint.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class DashboardController : Controller
     {
-        private readonly ICookieService cookieService;
+        private readonly SignInManager<IdentityUser<int>> _signInManager;
 
-        public DashboardController(ICookieService CookieService)
+        public DashboardController(SignInManager<IdentityUser<int>> signInManager)
         {
-            cookieService = CookieService;
+            _signInManager = signInManager;
         }
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            cookieService.Delete("Id");
-            cookieService.Delete("Username");
-            cookieService.Delete("Role");
-            return RedirectToAction("Index", "Login");
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account", new { area = "" });
         }
     }
 }

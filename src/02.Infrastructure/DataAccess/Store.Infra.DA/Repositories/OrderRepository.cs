@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Store.Domain.Core.Data;
 using Store.Domain.Core.Dtos.OrderDtos;
@@ -35,7 +36,7 @@ namespace Store.Infra.DA.Repositories
                     Id = o.Id,
                     UserId = o.UserId,
                     TotalPrice = o.TotalPrice,
-                    Email=o.User.Email,
+                    Email=o.User.IdentityUser.Email!,
                     FullName=o.User.FullName,
                     OrderDate = o.OrderDate,
             }).ToListAsync(cancellationToken);

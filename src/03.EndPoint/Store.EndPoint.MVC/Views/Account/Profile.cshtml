@@ -1,0 +1,163 @@
+﻿@model UpdateProfileViewModel
+@{
+    ViewData["Title"] = "پروفایل کاربری";
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <title>@ViewData["Title"]</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef2ff, #dbeafe);
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            
+            max-width: 520px;
+            margin: auto;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-bottom: 16px;
+            background: cornflowerblue;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+            .btn-back:hover {
+                background: #4f6fe0; 
+            }
+
+
+        .card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 15px 30px rgba(0,0,0,.08);
+        }
+
+        .title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 25px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 15px;
+        }
+
+            .info-item:last-child {
+                border-bottom: none;
+            }
+
+        .label {
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .value {
+            color: #111827;
+            font-weight: 600;
+        }
+
+        .wallet {
+            color: #16a34a;
+            font-weight: 700;
+        }
+
+        .actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .btn-edit {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 26px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: .2s;
+        }
+
+            .btn-edit:hover {
+                background: #2563eb;
+            }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <a asp-controller="Store"
+           asp-action="Index"
+           class="btn-back">
+            ⬅ بازگشت
+        </a>
+
+        <div class="card">
+
+            <div class="title">پروفایل کاربری</div>
+
+            <div class="info-item">
+                <span class="label">نام و نام خانوادگی</span>
+                <span class="value">@Model.FullName</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">نام کاربری</span>
+                <span class="value">@Model.UserName</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">ایمیل</span>
+                <span class="value">@Model.Email</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">موجودی کیف پول</span>
+                <span class="value wallet">
+                    @Model.Wallet تومان
+                </span>
+            </div>
+
+            <div class="actions">
+                <a asp-controller="Account"
+                   asp-action="UpdateProfile"
+                   asp-route-id="@Model.UserId"
+                   class="btn-edit">
+                    ✏️ ویرایش اطلاعات
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
+
